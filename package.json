@@ -15,7 +15,7 @@
     "docker-compose:start": "docker-compose -f docker-compose.yml up",
     "docker-compose:stop": "docker-compose -f docker-compose.yml down"
   },
-  "dependencies": {
+  "dependencies": { 
     "express": "^4.22.1",
     "serve-static": "^1.16.2",
     "socket.io": "^4.8.1"
