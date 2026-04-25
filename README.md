@@ -1,154 +1,79 @@
-Open-EasyRTC
-=======
+EasyRTC API Specs
 
-[![npm version](https://img.shields.io/npm/v/open-easyrtc.svg?style=flat)](https://www.npmjs.com/package/open-easyrtc)
-[![Build Status](https://github.com/open-easyrtc/open-easyrtc/actions/workflows/main.yaml/badge.svg)](https://github.com/open-easyrtc/open-easyrtc/actions/workflows/main.yaml)
+File into this directory are Unitests built using Jasmine.
 
+More infos about Jasmine can be found at:
+- http://pivotal.github.io/jasmine/
+- https://github.com/pivotal/jasmine/wiki
+- http://www.adobe.com/devnet/html5/articles/unit-test-javascript-applications-with-jasmine.html
+- http://www.slideshare.net/chrisjpowers/jasmine-6417624
 
-[![NPM](https://nodei.co/npm/open-easyrtc.png)](https://npmjs.org/package/open-easyrtc)
+Create a new test
+=======================================================================
 
-Open-EasyRTC is a Fork of Priologic's EasyRTC, include an EasyRTC server and client API, HTML5 and JavaScript demos under a BSD 2 license.
+1. Create a file <MyNameSpace>.js into spec/api/easyrtc/ directory with
 
-Original Source and Fork intent
---------------------
+2. Import following template and replace <MyNameSpace> by your value
 
-This NodeJS `open-easyrtc` module version is a fork of `easyrtc` hosted on Github originally made by `Priologic Software Inc.` and available here: https://github.com/priologic/easyrtc
+> /*
+>   Script: <MyNameSpace>.js
+>
+>     This file is part of EasyRTC.
+> */
+>
+> /*global
+>     define, describe, it, expect, spyOn, jasmine
+> */
+>
+> define(['EasyRTC/<MyNameSpace>'], function (MyNameSpace) {
+>     'use strict';
+>
+>     describe("EasyRTC.<MyNameSpace>", function () {
+>
+>     });
+> });
 
-This fork of `easyrtc` module named `open-easyrtc` starts at version `2.0.0` in case previous the repository decides to pick up work again on version `1.x.x`.
+3. Add 'EasyRTC/<MyNameSpace>' module to spec/index.js
 
+Available asserts
+=======================================================================
 
-Features
---------
- * Install EasyRTC's WebRTC Server on your own Linux, Windows, or Mac server in minutes not days.
- * Use our EasyRTC API and sample application code to build and deploy your WebRTC app in hours not weeks.
- * EasyRTC is completely free and open source under a BSD 2 license. No usage costs or other hidden fees.
+expect(x).toEqual(y); compares objects or primitives x and y and passes if they are equivalent
 
-Installation In A Nutshell
---------------------------
- 1. Install [Node.js](http://nodejs.org)
- 2. Download the EasyRTC distribution from github (https://github.com/open-easyrtc/open-easyrtc.git)
- 3. Run `npm install` in the easyrtc directory.
- 4. Enter the easyrtc/server_example directory by executing `cd server_example`
- 5. Run `npm install` in the server_example directory.
- 4. Start EasyRTC by running `node server.js` while in the server_example directory.
- 5. Browse the examples using a WebRTC enabled browser. *(defaults to port `8080`)*
+expect(x).toBe(y); compares objects or primitives x and y and passes if they are the same object
 
-Important note: Chrome will not grant access to local microphones or cameras for a page served using http except for the localhost case. See the docs/easyrtc_server_ssl.md file for instructions on serving files using https.
+expect(x).toMatch(pattern); compares x to string or regular expression pattern and passes if they match
 
-Step by step instructions including additional setup options can be found in `/docs/easyrtc_server_install.md`
+expect(x).toBeDefined(); passes if x is not undefined
 
-Note: there is no corresponding need to install the client files specifically; they were installed as part of EasyRTC in step 3.
+expect(x).toBeUndefined(); passes if x is undefined
 
-Documentation
--------------
-All documentation can be found within [the docs folder](./docs/).
+expect(x).toBeNull(); passes if x is null
 
-**EasyRTC Server**
+expect(x).toBeTruthy(); passes if x _evaluates_ to true.
+    For example expect(1).toBeTruthy() passes.
+    expect(x).toBe(true) is often more appropriate.
 
- * [Install instructions for Ubuntu, Windows, and Mac](./docs/easyrtc_server_install.md)
-     * `/docs/easyrtc_server_install.md`
- * [Configuration options](./docs/easyrtc_server_configuration.md)
-     * `/docs/easyrtc_server_configuration.md`
- * [Using Server Events](./docs/easyrtc_server_events.md)
-     * `/docs/easyrtc_server_events.md`  
- * [Server API](https://open-easyrtc.github.io/open-easyrtc/server/)
-     * `https://open-easyrtc.github.io/open-easyrtc/server/`  
+expect(x).toBeFalsy(); passes if x _evaluates_ to false.
+    For example expect("").toBeFalsy() passes.
+    expect(x).toBe(false) is often more appropriate.
 
-**EasyRTC Client**
- * [Client API tutorial](./docs/easyrtc_client_tutorial.md)
-     * `/docs/easyrtc_client_tutorial.md`
- * [Client API](https://open-easyrtc.github.io/open-easyrtc/client/Easyrtc.html)
-     * `https://open-easyrtc.github.io/open-easyrtc/client/Easyrtc.html`
- * [Client File Transfer API](https://open-easyrtc.github.io/open-easyrtc/client/Easyrtc_ft.html)
-     * `https://open-easyrtc.github.io/open-easyrtc/client/Easyrtc_ft.html`
- * [Client App API](https://open-easyrtc.github.io/open-easyrtc/client/Easyrtc_App.html)
-     * `https://open-easyrtc.github.io/open-easyrtc/client/Easyrtc_App.html`
+expect(x).toContain(y); passes if array or string x contains y
 
-**General Development**
- * [Frequently asked questions](./docs/easyrtc_faq.md)
-     * `/docs/easyrtc_faq.md`
- * [Authentication](./docs/easyrtc_authentication.md/)
-     * `/docs/easyrtc_authentication.md`  
- * [ICE, TURN, STUN Configuration](./docs/easyrtc_server_ice.md)
-     * `/docs/easyrtc_server_ice.md`  
- * [Using Rooms](./docs/easyrtc_rooms.md)
-     * `/docs/easyrtc_rooms.md`  
- * [Serving with SSL](./docs/easyrtc_server_ssl.md)
-     * `/docs/easyrtc_server_ssl.md`  
- * [Serving next to IIS or Apache](./docs/easyrtc_with_other_servers.md)
-     * `/docs/easyrtc_with_other_servers.md`  
- * [Upcoming features](./docs/easyrtc_upcoming_features.md)
-     * `/docs/easyrtc_upcoming_features.md`
- * [Common WebRTC problems](./docs/easyrtc_webrtc_problems.md)
-     * `/docs/easyrtc_webrtc_problems.md`
- * [Common EasyRTC problems (and solutions)](./docs/easyrtc_common_problems.md)
-     * `/docs/easyrtc_common_problems.md`
- * [Debugging WebRTC](./docs/webrtc_debugging.md)
-     * `/docs/webrtc_debugging.md`
- * [Server/Client Message Types](./docs/easyrtc_server_msgtypes.md)
-     * `/docs/easyrtc_changelog.md`
- * [Changelog](./docs/easyrtc_changelog.md)
-     * `/docs/easyrtc_changelog.md`
+expect(x).toBeLessThan(y); passes if x is less than y
 
+expect(x).toBeGreaterThan(y); passes if x is greater than y
 
-Folder Structure
-----------------
+expect(function(){fn();}).toThrow(e); passes if function fn throws exception e when executed
 
- * / (root)
-   * Licenses and package information
- * /api/
-   * Client API files including easyrtc.js  
- * /demos/
-   * EasyRTC live demos and example code
- * /docs/
-   * Documentation for using the API and running the server
- * /lib/
-   * Required libraries
- * /node_modules/
-   * Required node.js modules
-   * This folder will be created during the install
- * /server_example/
-   * A simple server example  
+expect(spiedMethod).toHaveBeenCalled(); passes if the spied method has been called
+    Note that calls to the spied method are better tested with expect(spiedMethod.callCount).toBe(n)
 
+Every matcher's criteria can be inverted by prepending .not:
 
-Included Demos
---------------
+expect(x).not.toEqual(y); compares objects or primitives x and y and passes if they are not equivalent
 
-EasyRTC comes with a number of demo's which work immediately after installation.
+Install Karma
+=======================================================================
 
- * Video and/or Audio connections
- * Multi-party video chat
- * Text Messaging with or without Data Channels
- * Screen and tab sharing
- * File transfer
- * Client side video recording
-
-License
--------
-
-Copyright (c) 2018, Open-EasyRTC
-
-Copyright (c) 2016, Priologic Software Inc. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the below copyright notice,
-  this list of conditions and the following disclaimer.
-* Redistributions in binary form must reproduce the below copyright
-  notice, this list of conditions and the following disclaimer in the
-  documentation and/or other materials provided with the distribution.
-
-```
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-```
+See http://karma-runner.github.io/
