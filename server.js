@@ -5,6 +5,10 @@ const WebSocket = require('ws');
 const app = express();
 const server = http.createServer(app);
 
+// Приём файлов до 100 МБ
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
+
 // WebSocket сервер
 const wss = new WebSocket.Server({ server });
 
@@ -29,7 +33,6 @@ wss.on('connection', (ws) => {
           console.log(`Участник в комнате ${room}. Всего: ${rooms.get(room).size}`);
           ws.send(JSON.stringify({ type: 'joined', room }));
 
-          // Если двое — сообщаем обоим
           if (rooms.get(room).size >= 2) {
             for (const client of rooms.get(room)) {
               client.send(JSON.stringify({ type: 'ready', room }));
@@ -38,7 +41,6 @@ wss.on('connection', (ws) => {
           break;
 
         case 'signal':
-          // Пересылаем сигнал всем в комнате, кроме отправителя
           for (const client of rooms.get(room)) {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
               client.send(JSON.stringify({ type: 'signal', payload }));
@@ -66,12 +68,12 @@ wss.on('connection', (ws) => {
   });
 });
 
-// Обычный HTTP (для проверки)
+// Проверка работы
 app.get('/', (req, res) => {
   res.send('Call server with WSS is running!');
 });
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Сервер работает на порту ${PORT}`);
 });
